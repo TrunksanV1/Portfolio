@@ -1,0 +1,315 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background-color: #1f3c88;
+    color: #fff;
+    padding: 2rem 0;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+header img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 4px solid #fff;
+    transition: transform 0.3s ease-in-out;
+}
+
+header img:hover {
+    transform: scale(1.1);
+}
+
+header div {
+    text-align: left;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+/* Menu de navigation */
+#main-nav {
+    background-color: #1f3c88;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#main-nav li {
+    display: inline;
+}
+
+#main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+#main-nav a.active {
+    background-color: #ff6b6b;
+    border-radius: 5px;
+}
+
+#main-nav a:hover {
+    background-color: #ff6b6b;
+}
+
+/* Sections */
+.content-section {
+    padding: 4rem 2rem;
+    display: none;
+    flex-grow: 1; /* Permet d'occuper l'espace restant pour garder le footer en bas */
+}
+
+.content-section.active {
+    display: block;
+}
+
+/* Section À propos de moi */
+#about-me {
+    padding: 4rem 2rem;
+    background-color: #f7f9fc;
+    text-align: center;
+}
+
+#about-me h2 {
+    font-size: 2.5rem;
+    color: #1f3c88;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+/* Conteneur pour le texte et l'image */
+.about-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligner le contenu en haut */
+    padding-right: 15px;
+    gap: 5rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Style du texte à propos */
+.about-text,
+.about-cv {
+    flex: 2; /* Prend 2 parties de l'espace */
+    text-align: justify;
+}
+
+.about-cv {
+    text-align: center;
+}
+
+.about-text h3,
+.about-cv h3 {
+    font-size: 1.8rem;
+    color: #1f3c88;
+    margin: 1.5rem 0 1rem; /* Espace entre les titres et le texte */
+    font-weight: 600;
+    text-align: center;
+}
+
+.about-text p,
+.about-cv p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* CV Button */
+.cv-button {
+    display: inline-block;
+    background-color: #1f3c88;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+    margin-top: 2rem; /* Ajout d'une marge pour séparer le bouton du texte */
+}
+
+.cv-button:hover {
+    background-color: #ff6b6b;
+}
+
+/* Section des projets */
+#projects {
+    background-color: #f7f9fc;
+    text-align: center;
+}
+
+#projects h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #1f3c88;
+}
+
+.project-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Cards */
+.project-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    padding: 2rem;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.project-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #1f3c88;
+}
+
+.project-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #1f3c88, #ff6b6b);
+    transition: width 0.4s ease-in-out;
+}
+
+.project-card:hover::before {
+    width: 100%;
+}
+
+/* Footer */
+footer {
+    background-color: #1f3c88;
+    color: #fff;
+    text-align: center;
+    padding: 25px 0;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header img {
+        width: 100px; /* Réduire la taille de l'image sur mobile */
+        height: 100px;
+    }
+
+    header h1 {
+        font-size: 2rem; /* Ajuster la taille du texte */
+        text-align: center;
+    }
+
+    header p {
+        font-size: 1rem; /* Ajuster la taille du texte */
+        text-align: center;
+    }
+
+    #main-nav ul {
+        gap: 1rem; /* Réduire l'espacement entre les éléments */
+    }
+
+    #main-nav a {
+        font-size: 1rem; /* Ajuster la taille du texte du menu */
+        padding: 0.5rem; /* Réduire le padding */
+    }
+
+    .about-container {
+        flex-direction: column; /* Passer à une colonne sur mobile */
+        align-items: center; /* Centrer le contenu */
+        padding: 0 1rem; /* Ajouter un peu de padding */
+        gap:0;
+    }
+
+    .about-cv {
+        flex: 1; /* Permettre aux sections de prendre toute la largeur */
+        text-align: center;
+        margin-bottom: 2rem; /* Espacement entre les sections */
+    }
+
+    .about-text {
+        flex: 1; /* Permettre aux sections de prendre toute la largeur */
+        text-align: justify; /* Centrer le texte */
+        margin-bottom: 2rem; /* Espacement entre les sections */
+    }
+
+    .project-card {
+        width: 90%; /* Utiliser presque toute la largeur de l'écran */
+        max-width: 400px; /* Ajouter une largeur max pour éviter que ça soit trop large */
+        margin: 0 auto; /* Centrer la carte de projet */
+    }
+
+    #projects h2 {
+        font-size: 2rem; /* Ajuster la taille du texte */
+    }
+    
+    footer {
+        font-size: 0.9rem; /* Ajuster la taille du texte du footer */
+    }
+}
+

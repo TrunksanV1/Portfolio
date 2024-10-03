@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio - Yanis Benmimoun</title>
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+    <header>
+        <a href="https://github.com/TrunksanV1" target="_blank">
+            <img src="IMG_4642.png" alt="Photo de Yanis Benmimoun">
+        </a>
+        <div>
+            <h1>Yanis Benmimoun - Développeur Fullstack</h1>
+            <p>Diplômé d'un BUT Informatique, à la recherche d'opportunités professionnelles.</p>
+        </div>
+    </header>
+
+    <!-- Menu de navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="about-me">Qui suis-je</a></li>
+            <li><a href="#" class="nav-link" data-section="projects">Mes projets</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sections -->
+    <section id="about-me" class="content-section">
+        <h2>À propos de moi</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <h3>Qui suis-je ?</h3>
+                <p>
+                    Je m'appelle Yanis Benmimoun, développeur fullstack passionné de 21 ans, diplômé d'un BUT Informatique. Ayant acquis des bases solides en développement web et une bonne maîtrise des technologies frontend et backend, je suis actuellement à la recherche d'une opportunité professionnelle qui me permettra de mettre en pratique mes compétences et d'apprendre davantage.
+                </p>
+            </div>
+            <div class="about-cv">
+                <h3>Mon CV</h3>
+                <p>
+                    Découvrez mon parcours complet en téléchargeant mon CV :
+                </p>
+                <a href="CV Yanis Benmimoun.pdf" target="_blank" class="cv-button">Télécharger mon CV</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="content-section hidden">
+        <h2>Mes Projets</h2>
+        <div class="project-grid">
+            <div class="project-card" data-link="https://trunksanv1.github.io/MonSalon/">
+                <h3>Mon Salon</h3>
+                <p>Site vitrine d'un salon de coiffure fictif.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projets à venir</h3>
+                <p>Restez attentifs à de nouveaux projets bientôt disponibles...</p>
+            </div>
+            <!-- Ajoute autant de cartes que nécessaire -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Yanis Benmimoun. Tous droits réservés.</p>
+    </footer>
+
+    <script src="portfolio.js"></script>
+</body>
+</html>
