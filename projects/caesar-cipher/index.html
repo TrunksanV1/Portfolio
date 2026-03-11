@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiffrement César - Yanis Benmimoun</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f6fb;
+            --bg-white: #ffffff;
+            --bg-header: #1e293b;
+            --accent: #4f46e5;
+            --accent-light: #6366f1;
+            --accent-bg: rgba(79, 70, 229, 0.06);
+            --green: #10b981;
+            --text: #334155;
+            --text-light: #64748b;
+            --text-heading: #0f172a;
+            --border: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #fff; }
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        header h1 i { color: var(--accent-light); margin-right: 0.5rem; }
+        header p { color: rgba(255,255,255,0.55); font-size: 1rem; }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1.5rem;
+        }
+
+        .app-container {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Mode toggle */
+        .mode-toggle {
+            display: flex;
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 0.7rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .mode-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(79,70,229,0.25);
+        }
+
+        /* Shift control */
+        .shift-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .shift-control label {
+            font-size: 0.95rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .shift-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .shift-btn {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .shift-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-bg);
+        }
+        .shift-value {
+            width: 50px;
+            text-align: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+
+        /* Text areas */
+        .text-area-wrapper { margin-bottom: 1.2rem; }
+        .text-area-wrapper label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-family: var(--font-code);
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        textarea:focus { border-color: var(--accent); }
+        textarea#output {
+            color: var(--accent);
+            cursor: default;
+        }
+
+        .arrow-divider {
+            text-align: center;
+            margin: 0.8rem 0;
+            color: var(--text-light);
+            font-size: 1.5rem;
+        }
+
+        /* Visual alphabet */
+        .alphabet-visual {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .alphabet-visual h3 {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .alphabet-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 0.4rem;
+        }
+        .alphabet-row:last-child { margin-bottom: 0; }
+        .letter-box {
+            width: 28px; height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 4px;
+            font-family: var(--font-code);
+        }
+        .letter-box.original {
+            background: var(--border);
+            color: var(--text-light);
+        }
+        .letter-box.shifted {
+            background: var(--accent-bg);
+            color: var(--accent);
+            border: 1px solid rgba(79,70,229,0.2);
+        }
+
+        footer {
+            background: var(--bg-header);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .app-container { padding: 1.5rem; }
+            header h1 { font-size: 1.6rem; }
+            .letter-box { width: 22px; height: 22px; font-size: 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+        <h1><i class="fas fa-lock"></i> Chiffrement César</h1>
+        <p>Chiffrez et déchiffrez vos messages avec le chiffre de César</p>
+    </header>
+
+    <main>
+        <div class="app-container">
+            <div class="mode-toggle">
+                <button class="mode-btn active" data-mode="encrypt">
+                    <i class="fas fa-lock"></i> Chiffrer
+                </button>
+                <button class="mode-btn" data-mode="decrypt">
+                    <i class="fas fa-unlock"></i> Déchiffrer
+                </button>
+            </div>
+
+            <div class="shift-control">
+                <label>Décalage :</label>
+                <div class="shift-input">
+                    <button class="shift-btn" id="shift-down">−</button>
+                    <input type="number" class="shift-value" id="shift-value" value="3" min="0" max="25">
+                    <button class="shift-btn" id="shift-up">+</button>
+                </div>
+            </div>
+
+            <div class="text-area-wrapper">
+                <label for="input">Texte à traiter</label>
+                <textarea id="input" placeholder="Entrez votre message ici..."></textarea>
+            </div>
+
+            <div class="arrow-divider"><i class="fas fa-arrow-down"></i></div>
+
+            <div class="text-area-wrapper">
+                <label for="output">Résultat</label>
+                <textarea id="output" readonly placeholder="Le résultat apparaîtra ici..."></textarea>
+            </div>
+
+            <div class="alphabet-visual">
+                <h3>Table de correspondance</h3>
+                <div class="alphabet-row" id="original-row"></div>
+                <div class="alphabet-row" id="shifted-row"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Yanis Benmimoun — Tous droits réservés</p>
+    </footer>
+
+    <script>
+        const inputEl = document.getElementById('input');
+        const outputEl = document.getElementById('output');
+        const shiftValue = document.getElementById('shift-value');
+        const shiftUp = document.getElementById('shift-up');
+        const shiftDown = document.getElementById('shift-down');
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        const originalRow = document.getElementById('original-row');
+        const shiftedRow = document.getElementById('shifted-row');
+
+        let mode = 'encrypt';
+
+        function caesarShift(text, shift, encrypt) {
+            const s = encrypt ? shift : (26 - shift) % 26;
+            return text.split('').map(char => {
+                if (char >= 'A' && char <= 'Z') {
+                    return String.fromCharCode(((char.charCodeAt(0) - 65 + s) % 26) + 65);
+                }
+                if (char >= 'a' && char <= 'z') {
+                    return String.fromCharCode(((char.charCodeAt(0) - 97 + s) % 26) + 97);
+                }
+                return char;
+            }).join('');
+        }
+
+        function process() {
+            const shift = parseInt(shiftValue.value) || 0;
+            const text = inputEl.value;
+            outputEl.value = caesarShift(text, shift, mode === 'encrypt');
+        }
+
+        function updateAlphabet() {
+            const shift = parseInt(shiftValue.value) || 0;
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            originalRow.innerHTML = '';
+            shiftedRow.innerHTML = '';
+            for (let i = 0; i < 26; i++) {
+                const origBox = document.createElement('div');
+                origBox.className = 'letter-box original';
+                origBox.textContent = alphabet[i];
+                originalRow.appendChild(origBox);
+                const shiftBox = document.createElement('div');
+                shiftBox.className = 'letter-box shifted';
+                shiftBox.textContent = alphabet[(i + shift) % 26];
+                shiftedRow.appendChild(shiftBox);
+            }
+        }
+
+        inputEl.addEventListener('input', process);
+        shiftValue.addEventListener('input', () => { process(); updateAlphabet(); });
+        shiftUp.addEventListener('click', () => {
+            let v = parseInt(shiftValue.value) || 0;
+            if (v < 25) { shiftValue.value = v + 1; process(); updateAlphabet(); }
+        });
+        shiftDown.addEventListener('click', () => {
+            let v = parseInt(shiftValue.value) || 0;
+            if (v > 0) { shiftValue.value = v - 1; process(); updateAlphabet(); }
+        });
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                mode = btn.dataset.mode;
+                process();
+            });
+        });
+        updateAlphabet();
+    </script>
+
+</body>
+</html>

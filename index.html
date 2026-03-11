@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description"
+        content="Portfolio de Yanis Benmimoun - Développeur Fullstack & passionné de Cybersécurité. Découvrez mes projets en développement web et sécurité informatique.">
+    <meta name="keywords"
+        content="Yanis Benmimoun, développeur, fullstack, cybersécurité, portfolio, projets, sécurité informatique">
+    <title>Portfolio - Yanis Benmimoun</title>
+    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="profile-wrapper">
+                <span class="github-tooltip"><i class="fab fa-github"></i> Accéder à mon GitHub</span>
+                <a href="https://github.com/TrunksanV1" target="_blank" class="profile-link">
+                    <img src="IMG_4642.png" alt="Photo de Yanis Benmimoun">
+                </a>
+            </div>
+            <div class="header-info">
+                <h1>Yanis Benmimoun</h1>
+                <p class="header-subtitle">Développeur Fullstack & Cybersécurité</p>
+                <p class="header-tagline">Étudiant en Master 1 Informatique — Fiabilité & Sécurité Informatique —
+                    Aix-Marseille Université</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu de navigation -->
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="about-me"><i class="fas fa-user"></i> Qui suis-je</a>
+            </li>
+            <li><a href="#" class="nav-link" data-section="projects"><i class="fas fa-code"></i> Mes projets</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sections -->
+    <section id="about-me" class="content-section">
+        <h2>À propos de moi</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <h3>Qui suis-je ?</h3>
+                <p>
+                    Je m'appelle Yanis Benmimoun, développeur fullstack passionné de 23 ans, étudiant en Master 1
+                    Informatique Option Fiabilité et Sécurité Informatique à l'université d'Aix Marseille.
+                </p>
+                <p>
+                    Passionné par la cybersécurité, je m'intéresse particulièrement à la sécurisation des applications
+                    web, à l'analyse de vulnérabilités et au développement d'outils de sécurité. Mes projets personnels
+                    reflètent cette double compétence en développement et en sécurité informatique.
+                </p>
+            </div>
+            <div class="about-cv">
+                <h3>Mon CV</h3>
+                <p>
+                    Découvrez mon parcours complet en téléchargeant mon CV :
+                </p>
+                <a href="CV Yanis Benmimoun.pdf" target="_blank" class="cv-button">
+                    <i class="fas fa-download"></i> Télécharger mon CV
+                </a>
+            </div>
+        </div>
+
+        <!-- Compétences -->
+        <div class="skills-section">
+            <h3>Mes compétences</h3>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h4>Informatique</h4>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Protocoles réseau</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <i class="fas fa-diagram-project"></i>
+                        <h4>Méthodologie</h4>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AGILE</span>
+                        <span class="skill-tag">SCRUM</span>
+                        <span class="skill-tag">UML</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <i class="fas fa-language"></i>
+                        <h4>Langues</h4>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Français <small>(Maternelle)</small></span>
+                        <span class="skill-tag">Anglais <small>(C1)</small></span>
+                        <span class="skill-tag">Espagnol <small>(B1)</small></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="content-section hidden">
+        <h2>Mes Projets</h2>
+        <div class="project-grid">
+
+            <div class="project-card" data-link="projects/password-generator/index.html">
+                <span class="project-tag tag-cyber">Cybersécurité</span>
+                <h3><i class="fas fa-key"></i> Générateur de Mots de Passe</h3>
+                <p>Outil de génération de mots de passe sécurisés avec indicateur de force, options personnalisables et
+                    copie en un clic.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">JavaScript</span>
+                </div>
+                <span class="project-link-indicator">Voir le projet <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="project-card" data-link="projects/caesar-cipher/index.html">
+                <span class="project-tag tag-crypto">Cryptographie</span>
+                <h3><i class="fas fa-lock"></i> Chiffrement César</h3>
+                <p>Outil de chiffrement et déchiffrement utilisant le chiffre de César avec table de correspondance
+                    visuelle en temps réel.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">JavaScript</span>
+                </div>
+                <span class="project-link-indicator">Voir le projet <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="project-card" data-link="projects/hash-generator/index.html">
+                <span class="project-tag tag-security">Sécurité</span>
+                <h3><i class="fas fa-fingerprint"></i> Hash Generator</h3>
+                <p>Générateur d'empreintes cryptographiques supportant SHA-256, SHA-512, SHA-1 et MD5 avec copie
+                    instantanée.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Web Crypto API</span>
+                </div>
+                <span class="project-link-indicator">Voir le projet <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <div class="project-card" data-link="https://trunksanv1.github.io/MonSalon/">
+                <span class="project-tag tag-web">Web</span>
+                <h3><i class="fas fa-store"></i> Mon Salon</h3>
+                <p>Site vitrine d'un salon de coiffure fictif. Design responsive et moderne avec animations CSS et
+                    expérience utilisateur soignée.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">JavaScript</span>
+                </div>
+                <span class="project-link-indicator">Voir le projet <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Yanis Benmimoun — Tous droits réservés</p>
+        <div class="footer-links">
+            <a href="https://github.com/TrunksanV1" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
+
+    <script src="portfolio.js"></script>
+</body>
+
+</html>

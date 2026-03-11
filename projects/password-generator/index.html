@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Mots de Passe - Yanis Benmimoun</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f6fb;
+            --bg-white: #ffffff;
+            --bg-header: #1e293b;
+            --accent: #4f46e5;
+            --accent-light: #6366f1;
+            --accent-bg: rgba(79, 70, 229, 0.06);
+            --green: #10b981;
+            --text: #334155;
+            --text-light: #64748b;
+            --text-heading: #0f172a;
+            --border: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #fff; }
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        header h1 i { color: var(--accent-light); margin-right: 0.5rem; }
+        header p { color: rgba(255,255,255,0.55); font-size: 1rem; }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1.5rem;
+        }
+
+        .app-container {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Password display */
+        .password-display {
+            display: flex;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            gap: 0.8rem;
+        }
+        .password-display input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-family: var(--font-code);
+            font-weight: 700;
+            letter-spacing: 1px;
+            outline: none;
+        }
+        .btn-copy {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .btn-copy:hover { color: var(--accent); background: var(--accent-bg); }
+        .btn-copy.copied { color: var(--green); }
+
+        /* Strength meter */
+        .strength-meter { margin-bottom: 1.5rem; }
+        .strength-bar-bg {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.4rem;
+        }
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 3px;
+            transition: all 0.4s ease;
+        }
+        .strength-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Controls */
+        .control-group { margin-bottom: 1.2rem; }
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .control-group label span.value {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(79,70,229,0.3);
+        }
+
+        /* Checkboxes */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .checkbox-item:hover { border-color: rgba(79,70,229,0.3); }
+        .checkbox-item.active {
+            border-color: rgba(79,70,229,0.4);
+            background: var(--accent-bg);
+        }
+        .checkbox-item input { display: none; }
+        .check-icon {
+            width: 20px; height: 20px;
+            border: 2px solid var(--text-light);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        .checkbox-item.active .check-icon {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .check-icon i { font-size: 0.7rem; display: none; }
+        .checkbox-item.active .check-icon i { display: block; }
+        .checkbox-item span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .checkbox-item.active span { color: var(--text); }
+
+        /* Generate button */
+        .btn-generate {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 12px rgba(79,70,229,0.25);
+        }
+        .btn-generate:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79,70,229,0.3);
+        }
+        .btn-generate:active { transform: translateY(0); }
+
+        footer {
+            background: var(--bg-header);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .app-container { padding: 1.5rem; }
+            header h1 { font-size: 1.6rem; }
+            .checkbox-group { grid-template-columns: 1fr; }
+            .password-display input { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+        <h1><i class="fas fa-key"></i> Générateur de Mots de Passe</h1>
+        <p>Créez des mots de passe forts et sécurisés en un clic</p>
+    </header>
+
+    <main>
+        <div class="app-container">
+            <div class="password-display">
+                <input type="text" id="password-output" readonly value="Cliquez sur Générer">
+                <button class="btn-copy" id="btn-copy" title="Copier"><i class="fas fa-copy"></i></button>
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar-bg">
+                    <div class="strength-bar" id="strength-bar"></div>
+                </div>
+                <div class="strength-label" id="strength-label">—</div>
+            </div>
+
+            <div class="control-group">
+                <label>Longueur <span class="value" id="length-value">16</span></label>
+                <input type="range" id="length-slider" min="4" max="64" value="16">
+            </div>
+
+            <div class="checkbox-group">
+                <label class="checkbox-item active" data-option="uppercase">
+                    <input type="checkbox" checked>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                    <span>Majuscules (A-Z)</span>
+                </label>
+                <label class="checkbox-item active" data-option="lowercase">
+                    <input type="checkbox" checked>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                    <span>Minuscules (a-z)</span>
+                </label>
+                <label class="checkbox-item active" data-option="numbers">
+                    <input type="checkbox" checked>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                    <span>Chiffres (0-9)</span>
+                </label>
+                <label class="checkbox-item active" data-option="symbols">
+                    <input type="checkbox" checked>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                    <span>Symboles (!@#$)</span>
+                </label>
+            </div>
+
+            <button class="btn-generate" id="btn-generate">
+                <i class="fas fa-sync-alt"></i> Générer un mot de passe
+            </button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Yanis Benmimoun — Tous droits réservés</p>
+    </footer>
+
+    <script>
+        const charSets = {
+            uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lowercase: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+
+        const lengthSlider = document.getElementById('length-slider');
+        const lengthValue = document.getElementById('length-value');
+        const passwordOutput = document.getElementById('password-output');
+        const btnGenerate = document.getElementById('btn-generate');
+        const btnCopy = document.getElementById('btn-copy');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthLabel = document.getElementById('strength-label');
+        const checkboxItems = document.querySelectorAll('.checkbox-item');
+
+        lengthSlider.addEventListener('input', () => {
+            lengthValue.textContent = lengthSlider.value;
+        });
+
+        checkboxItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const checkbox = item.querySelector('input');
+                const activeCount = document.querySelectorAll('.checkbox-item.active').length;
+                if (item.classList.contains('active') && activeCount <= 1) return;
+                item.classList.toggle('active');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        function generatePassword() {
+            const length = parseInt(lengthSlider.value);
+            let chars = '';
+            const activeOptions = [];
+            checkboxItems.forEach(item => {
+                if (item.classList.contains('active')) {
+                    const option = item.dataset.option;
+                    activeOptions.push(option);
+                    chars += charSets[option];
+                }
+            });
+            if (chars.length === 0) return;
+            let password = '';
+            activeOptions.forEach(opt => {
+                const set = charSets[opt];
+                password += set[Math.floor(Math.random() * set.length)];
+            });
+            for (let i = password.length; i < length; i++) {
+                password += chars[Math.floor(Math.random() * chars.length)];
+            }
+            password = password.split('').sort(() => Math.random() - 0.5).join('');
+            passwordOutput.value = password;
+            updateStrength(password);
+        }
+
+        function updateStrength(password) {
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (password.length >= 12) score++;
+            if (password.length >= 20) score++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^a-zA-Z0-9]/.test(password)) score++;
+            const levels = [
+                { label: 'Très faible', color: '#ef4444', width: 15 },
+                { label: 'Faible', color: '#f97316', width: 30 },
+                { label: 'Moyen', color: '#eab308', width: 50 },
+                { label: 'Bon', color: '#22c55e', width: 70 },
+                { label: 'Fort', color: '#10b981', width: 85 },
+                { label: 'Excellent', color: '#10b981', width: 100 },
+            ];
+            const level = levels[Math.min(score, levels.length - 1)];
+            strengthBar.style.width = level.width + '%';
+            strengthBar.style.background = level.color;
+            strengthLabel.textContent = level.label;
+            strengthLabel.style.color = level.color;
+        }
+
+        btnCopy.addEventListener('click', () => {
+            if (passwordOutput.value && passwordOutput.value !== 'Cliquez sur Générer') {
+                navigator.clipboard.writeText(passwordOutput.value);
+                btnCopy.classList.add('copied');
+                btnCopy.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    btnCopy.classList.remove('copied');
+                    btnCopy.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 1500);
+            }
+        });
+
+        btnGenerate.addEventListener('click', generatePassword);
+        generatePassword();
+    </script>
+
+</body>
+</html>
