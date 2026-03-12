@@ -51,6 +51,9 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* ===== HEADER ===== */
@@ -686,6 +689,10 @@ footer p {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
     .header-content {
         flex-direction: column;
         text-align: center;
