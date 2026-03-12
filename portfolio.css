@@ -503,6 +503,12 @@ header h1 {
     border: 1px solid var(--orange-border);
 }
 
+.tag-academic {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+}
+
 .project-card h3 {
     font-size: 1.15rem;
     margin-bottom: 0.5rem;
