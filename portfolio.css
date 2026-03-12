@@ -284,7 +284,7 @@ header h1 {
 
 .about-cv {
     flex: 1;
-    text-align: center;
+    text-align: justify;
 }
 
 .about-text h3,
@@ -305,7 +305,9 @@ header h1 {
 
 /* CV Button */
 .cv-button {
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
+    margin: 1rem auto 0;
     align-items: center;
     gap: 0.5rem;
     background: var(--accent);
@@ -315,7 +317,6 @@ header h1 {
     text-decoration: none;
     font-size: 0.92rem;
     font-weight: 600;
-    margin-top: 1rem;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
 }
@@ -329,14 +330,15 @@ header h1 {
 /* Internship Bubble */
 .internship-bubble {
     position: relative;
-    display: inline-block;
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto 0;
     background: var(--bg-white);
     color: var(--accent);
     padding: 0.6rem 1.2rem;
     border-radius: 12px;
     font-size: 0.85rem;
     font-weight: 600;
-    margin-top: 1.5rem;
     border: 1px solid var(--accent-border);
     box-shadow: 0 4px 15px rgba(79, 70, 229, 0.1);
     animation: gentleBounce 2s infinite ease-in-out;
@@ -371,18 +373,47 @@ header h1 {
 }
 
 @keyframes gentleBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
 }
 
 @keyframes wave {
-    0%, 100% { transform: rotate(0deg); }
-    10% { transform: rotate(14deg); }
-    20% { transform: rotate(-8deg); }
-    30% { transform: rotate(14deg); }
-    40% { transform: rotate(-4deg); }
-    50% { transform: rotate(10deg); }
-    60% { transform: rotate(0deg); }
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    10% {
+        transform: rotate(14deg);
+    }
+
+    20% {
+        transform: rotate(-8deg);
+    }
+
+    30% {
+        transform: rotate(14deg);
+    }
+
+    40% {
+        transform: rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    60% {
+        transform: rotate(0deg);
+    }
 }
 
 /* ===== SKILLS SECTION ===== */
@@ -392,7 +423,7 @@ header h1 {
 }
 
 .skills-section h3 {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     color: var(--text-heading);
     font-weight: 700;
     text-align: center;
@@ -750,6 +781,30 @@ footer p {
     }
 }
 
+/* Tasser l'affichage sur les petits écrans en hauteur pour éviter le scroll vertical inutile */
+@media (max-height: 900px) and (min-width: 769px) {
+    header {
+        padding: 1.5rem 2rem 1rem;
+    }
+
+    header img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .content-section {
+        padding: 1rem 2rem;
+    }
+
+    .about-container {
+        margin-bottom: 0.5rem;
+    }
+
+    .internship-bubble {
+        margin: 1rem auto 0;
+    }
+}
+
 /* ===== UTILITIES ===== */
 html {
     scroll-behavior: smooth;
@@ -767,6 +822,8 @@ html {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
