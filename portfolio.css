@@ -631,6 +631,7 @@ header h1 {
     color: var(--text-light);
     line-height: 1.65;
     flex-grow: 1;
+    text-align: justify;
 }
 
 /* Tech badges */
