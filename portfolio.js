@@ -4,6 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     projectCards.forEach(card => {
         card.addEventListener('click', () => {
+            const downloadLink = card.getAttribute('data-download');
+            if (downloadLink) {
+                const a = document.createElement('a');
+                a.href = downloadLink;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                return;
+            }
             const projectLink = card.getAttribute('data-link');
             if (projectLink != null) {
                 if (projectLink.startsWith('http')) {
