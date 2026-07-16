@@ -539,11 +539,33 @@ header h1 {
     background: var(--accent-bg);
     border: 1px solid var(--accent-border);
     border-radius: 50px;
+    cursor: default;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .featured-label i {
     margin-right: 0.4rem;
     color: #f59e0b;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Star sparkle animation on hover */
+.featured-project .featured-label:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+.featured-project .featured-label:hover i {
+    animation: starSparkle 0.6s ease-in-out;
+}
+
+@keyframes starSparkle {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    25% { transform: scale(1.3) rotate(-12deg); opacity: 0.7; }
+    50% { transform: scale(0.9) rotate(8deg); opacity: 1; }
+    75% { transform: scale(1.2) rotate(-5deg); opacity: 0.8; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 .featured-card {
@@ -559,6 +581,29 @@ header h1 {
 .other-projects-label {
     text-align: center;
     margin-bottom: 1rem;
+}
+
+/* Folder bounce animation on hover */
+.other-projects-label .featured-label:hover {
+    border-color: rgba(79, 70, 229, 0.3);
+    box-shadow: 0 0 12px rgba(79, 70, 229, 0.1);
+}
+
+.other-projects-label .featured-label i {
+    color: var(--accent);
+}
+
+.other-projects-label .featured-label:hover i {
+    animation: folderBounce 0.5s ease-in-out;
+}
+
+@keyframes folderBounce {
+    0% { transform: scale(1) translateY(0); }
+    20% { transform: scale(1.15) translateY(-3px); }
+    40% { transform: scale(0.95) translateY(1px); }
+    60% { transform: scale(1.1) translateY(-2px); }
+    80% { transform: scale(0.98) translateY(0); }
+    100% { transform: scale(1) translateY(0); }
 }
 
 /* Cards */
