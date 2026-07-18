@@ -1155,23 +1155,37 @@ footer p {
         grid-template-columns: 1fr;
     }
 
+    .content-section {
+        padding: 1.5rem 0.8rem;
+    }
+
     .content-section h2 {
         font-size: 1.5rem;
     }
 
     /* Experiences responsive */
+    .experiences-container {
+        padding: 0;
+    }
+
     .timeline-item {
-        padding-left: 50px;
+        padding-left: 35px;
+        margin-bottom: 1.5rem;
     }
 
     .timeline::before {
-        left: 18px;
+        left: 11px;
     }
 
     .timeline-dot {
-        left: 4px;
-        width: 28px;
-        height: 28px;
+        left: 0;
+        width: 24px;
+        height: 24px;
+        top: 1.2rem;
+    }
+
+    .timeline-dot i {
+        font-size: 0.6rem;
     }
 
     .experience-header {
@@ -1181,10 +1195,16 @@ footer p {
 
     .experience-date {
         margin-top: 0;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
     }
 
     .experience-card {
-        padding: 1.3rem;
+        padding: 1.1rem;
+    }
+
+    .experience-tasks li {
+        font-size: 0.82rem;
     }
 
     #main-nav a {
