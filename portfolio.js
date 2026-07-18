@@ -25,6 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Redirection au clic sur les cartes expérience cliquables
+    const experienceCards = document.querySelectorAll('.experience-card-link');
+    experienceCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const link = card.getAttribute('data-link');
+            if (link) {
+                if (link.startsWith('http')) {
+                    window.open(link, '_blank');
+                } else {
+                    window.location.href = link;
+                }
+            }
+        });
+    });
+
     // Navigation entre sections
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.content-section');
@@ -37,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Animer les cartes projet quand la section projets est activée
                 if (sectionId === 'projects') {
                     animateCards();
+                }
+                // Animer les timeline items quand la section expériences est activée
+                if (sectionId === 'experiences') {
+                    animateTimeline();
                 }
             } else {
                 section.classList.remove('active');
@@ -57,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Activer la section selon le hash de l'URL, ou about-me par défaut
     const hash = window.location.hash.replace('#', '');
-    const initialSection = (hash === 'projects') ? 'projects' : 'about-me';
+    const initialSection = ['projects', 'experiences'].includes(hash) ? hash : 'about-me';
     changeSection(initialSection);
     // Nettoyer le hash pour que F5 revienne toujours sur l'accueil
     if (window.location.hash) {
@@ -80,6 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
                 card.classList.add('visible');
+            }, 50);
+        });
+    }
+
+    // Animation d'apparition des timeline items
+    function animateTimeline() {
+        const items = document.querySelectorAll('.timeline-item');
+        items.forEach((item, index) => {
+            item.classList.remove('visible');
+            setTimeout(() => {
+                item.style.transition = `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s`;
+                item.classList.add('visible');
             }, 50);
         });
     }
