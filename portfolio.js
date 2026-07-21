@@ -1,4 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Intersection Observer pour les animations au défilement (scroll-animate)
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+
+                // Si c'est la bannière des stats, on lance l'animation des nombres
+                if (entry.target.classList.contains('stats-banner')) {
+                    if (typeof animateStats === 'function') {
+                        animateStats();
+                    }
+                }
+
+                observer.unobserve(entry.target); // Ne l'animer qu'une seule fois
+            }
+        });
+    }, observerOptions);
+
+    // Initialiser l'observation pour les éléments scroll-animate
+    function initScrollAnimations() {
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            el.classList.remove('visible'); // Reset if needed
+            scrollObserver.observe(el);
+        });
+    }
+
     // Redirection au clic sur les cartes projet
     const projectCards = document.querySelectorAll('.project-card');
 
@@ -57,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (sectionId === 'experiences') {
                     animateTimeline();
                 }
+                // Réinitialiser les animations scroll quand on revient sur about-me
+                if (sectionId === 'about-me' && typeof initScrollAnimations === 'function') {
+                    initScrollAnimations();
+                }
             } else {
                 section.classList.remove('active');
                 section.classList.add('hidden');
@@ -112,6 +147,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.style.transition = `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s`;
                 item.classList.add('visible');
             }, 50);
+        });
+    }
+
+
+    // Call it initially if on about-me
+    if (initialSection === 'about-me') {
+        initScrollAnimations();
+    }
+
+    // Animation des compteurs de statistiques
+    function animateStats() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const target = +stat.getAttribute('data-target');
+            const duration = 2000; // 2 secondes
+            const increment = target / (duration / 16); // ~60 FPS
+
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    stat.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    stat.innerText = target;
+                }
+            };
+            updateCounter();
         });
     }
 });
