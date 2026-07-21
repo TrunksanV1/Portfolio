@@ -44,13 +44,71 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: rgba(255,255,255,0.55);
+            color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
-            transition: color 0.3s;
+            font-weight: 600;
+            padding: 0.55rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 1.2rem;
+            left: 1.5rem;
+            z-index: 10;
         }
-        .back-link:hover { color: #fff; }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateX(-3px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-link i {
+            transition: transform 0.3s;
+        }
+
+        .back-link:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* Bottom back link */
+        .back-link-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            padding: 0.85rem 1.8rem;
+            background: var(--bg-white);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: 1.5px solid var(--accent-border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .back-link-bottom:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .back-link-bottom i {
+            transition: transform 0.3s;
+        }
+
+        .back-link-bottom:hover i {
+            transform: translateX(-4px);
+        }
         header h1 {
             font-size: 2.2rem;
             font-weight: 800;
@@ -262,7 +320,7 @@
 <body>
 
     <header>
-        <a href="../../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+        <a href="../../index.html#projects" class="back-link" id="back-link-top"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
         <h1><i class="fas fa-lock"></i> Chiffrement César</h1>
         <p>Chiffrez et déchiffrez vos messages avec le chiffre de César</p>
     </header>
@@ -306,6 +364,11 @@
             </div>
         </div>
     </main>
+
+    <!-- Bottom back link -->
+    <a href="../../index.html#projects" class="back-link-bottom" id="back-link-bottom">
+        <i class="fas fa-arrow-left"></i> Retour aux projets
+    </a>
 
     <footer>
         <p>&copy; 2026 Yanis Benmimoun — Tous droits réservés</p>
@@ -378,6 +441,30 @@
             });
         });
         updateAlphabet();
+
+        // Detect where the user came from and update back links
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const from = params.get('from');
+            const topLink = document.getElementById('back-link-top');
+            const bottomLink = document.getElementById('back-link-bottom');
+
+            if (from === 'experiences') {
+                const href = '../../index.html#experiences';
+                const text = 'Retour aux expériences';
+                topLink.href = href;
+                topLink.innerHTML = '<i class="fas fa-arrow-left"></i> ' + text;
+                bottomLink.href = href;
+                bottomLink.innerHTML = '<i class="fas fa-arrow-left"></i> ' + text;
+            } else {
+                const href = '../../index.html#projects';
+                const text = 'Retour aux projets';
+                topLink.href = href;
+                topLink.innerHTML = '<i class="fas fa-arrow-left"></i> ' + text;
+                bottomLink.href = href;
+                bottomLink.innerHTML = '<i class="fas fa-arrow-left"></i> ' + text;
+            }
+        })();
     </script>
 
 </body>
